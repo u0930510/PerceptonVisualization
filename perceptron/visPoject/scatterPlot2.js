@@ -483,7 +483,7 @@ function runPerceptron(i){
 
     line.attr("class", "weightVector");
 
-    if(i<givenData2.length){
+    if(i<givenData2.length-1){
         setTimeout(function(){
             runPerceptron(i+1)
         }, 700);

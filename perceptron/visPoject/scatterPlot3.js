@@ -364,6 +364,7 @@ function showClassifiers(){
             if(val=="line2"){
                 circle
                     .attr("style","fill:green");
+                getSecondKID3();
             }
 
             if(val=="line1"){
@@ -376,6 +377,7 @@ function showClassifiers(){
                         else
                             return "fill:green";
                     });
+                getfirstKID3();
             }
             if(val=="line3"){
                 circle
@@ -387,6 +389,7 @@ function showClassifiers(){
                         else
                             return "fill:red";
                     });
+                getThirdKID3();
             }
 
     })
