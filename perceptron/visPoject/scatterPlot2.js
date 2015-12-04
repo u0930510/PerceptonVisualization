@@ -371,9 +371,19 @@ function findIntersection(){
 }
 
 
+
+
 // function to run the perceptron
 
 function runPerceptron(i){
+
+    if(i== givenData2.length-1){
+        addTextTrainingAccuracy();
+        getNextHappyKID2();
+
+    }
+
+    d3.select("#tempCircle").remove();
 
     d3.selectAll(".onclickChange").remove();
 
@@ -390,6 +400,14 @@ function runPerceptron(i){
         svg2.selectAll(".weightVector").remove();
 
     }
+
+    var tempCircle = svg2.append("circle")
+        .attr("cx",temp.x )
+        .attr("cy", temp.y)
+        .attr("r", 7)
+        .attr("id", "tempCircle")
+        .style("fill","red");
+
 
 
     var point = {xPosition:0, yPosition:0, label:+1};
@@ -483,7 +501,7 @@ function runPerceptron(i){
 
     line.attr("class", "weightVector");
 
-    if(i<givenData2.length-1){
+    if(i<givenData2.length){
         setTimeout(function(){
             runPerceptron(i+1)
         }, 700);

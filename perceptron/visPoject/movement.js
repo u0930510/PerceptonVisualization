@@ -13,7 +13,7 @@ for (var i=0,max=values.length; i<max; i++) {
 
 function gotoSecond() {
     try {
-        window.scrollBy(0, 700);
+        window.scrollBy(0, 900);
        // values[1].focus();
         getOriginalKid();
         setTimeout(drawWeightVector,1000);
@@ -26,7 +26,7 @@ function gotoSecond() {
 function gotoThird() {
     try {
       //  values[2].focus();
-        window.scrollBy(0, 850);
+        window.scrollBy(0, 900);
 
     }catch(e){ console.log("Error! ", e); }
 

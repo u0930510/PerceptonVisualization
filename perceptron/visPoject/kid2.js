@@ -17,6 +17,7 @@ var svgKid2 = d3.select("body").append("svg")
 
 
 
+
 function getOriginalKid(){
 
     var kid2= svgKid2.selectAll("image").data([0]);
@@ -70,3 +71,33 @@ function getNextNeutralKID2(){
         .attr("width", "200")
         .attr("height", "200");
 }
+
+function  addTextTrainingAccuracy(){
+    svgKid2.selectAll(".kid2text").remove();
+    svgKid2.append("text")
+        .attr("x", "170")
+        .attr("y", "340")
+        .attr("text-anchor", "middle")
+        .attr("font-size", 15)
+        .attr("opacity", "1")
+        .text("Training Accuracy");
+
+    svgKid2.append("text")
+        .attr("x", "170")
+        .attr("y", "360")
+        .attr("text-anchor", "middle")
+        .attr("font-size", 20)
+        .attr("opacity", "1")
+        .text("100%");
+}
+
+
+
+    svgKid2.append("text")
+        .attr("x", "170")
+        .attr("y", "340")
+        .attr("class","kid2text")
+        .attr("text-anchor", "middle")
+        .attr("font-size", 15)
+        .attr("opacity", "1")
+        .text("Training ...");
