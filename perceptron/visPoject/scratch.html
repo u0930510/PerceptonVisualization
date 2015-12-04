@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://lab.interactivethings.com/lib/d3-grid.js"></script>
+<script>
+
+    var width = 960,
+            height = 500,
+            petals = 12,
+            halfRadius = 15;
+
+    var size = d3.scale.sqrt()
+            .domain([0, 1])
+            .range([0, halfRadius]);
+
+    var grid = d3.layout.grid()
+            .size([width - halfRadius * 6, height - halfRadius * 6]);
+
+    var pie = d3.layout.pie()
+            .sort(null)
+            .value(function(d) { return d.size; });
+
+    var svg = d3.select("body").append("svg2")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + halfRadius * 3 + "," + halfRadius * 3 + ")");
+
+    var data = d3.range(49).map(function(d) {
+        return {
+            id: d,
+            petals: d3.range(petals).map(function(d) { return {size: 0.5}; })
+        }
+    });
+
+    var flower = svg.selectAll('.flower')
+            .data(grid(data))
+            .enter().append('g')
+            .attr("class", "flower")
+            .attr("transform", function(d, i) {
+                return "translate(" + d.x + "," + d.y + ")";
+            });
+
+    var petal = flower.selectAll(".petal")
+            .data(function(d) { return pie(d.petals); })
+            .enter().append("path")
+            .attr("class", "petal")
+            .attr("transform", function(d) { return r((d.startAngle + d.endAngle) / 2); })
+            .attr("d", petalPath)
+            .style("stroke", petalStroke)
+            .style("fill", petalFill);
+
+    setInterval(update, 4000)
+
+    function update() {
+        data.forEach(function(flower) {
+            flower.petals.forEach(function(d) { d.size = Math.random(); });
+        })
+        data.sort(function(a, b) {
+            return d3.descending(flowerSum(a), flowerSum(b));
+        });
+
+        flower.data(grid(data), function(d) { return d.id; }).transition().delay(function(d, i) { return 1000 + i * 20; }).duration(1000)
+                .attr("transform", function(d, i) {
+                    return "translate(" + d.x + "," + d.y + ")";
+                });
+
+        petal.data(function(d) { return pie(d.petals); }).transition().duration(1000)
+                .attr("transform", function(d) { return r((d.startAngle + d.endAngle) / 2); })
+                .attr("d", petalPath);
+    }
+
+    function petalPath(d) {
+        var angle = (d.endAngle - d.startAngle) / 2,
+                s = polarToCartesian(-angle, halfRadius),
+                e = polarToCartesian(angle, halfRadius),
+                r = size(d.data.size),
+                m = {x: halfRadius + r, y: 0},
+                c1 = {x: halfRadius + r / 2, y: s.y},
+                c2 = {x: halfRadius + r / 2, y: e.y};
+        return "M0,0L" + s.x + "," + s.y + "Q" + c1.x + "," + c1.y + " " + m.x + "," + m.y + "L" + m.x + "," + m.y + "Q" + c2.x + "," + c2.y + " " + e.x + "," + e.y + "Z";
+    };
+
+    function petalFill(d, i) {
+        return d3.hcl(i / petals * 360, 60, 70);
+    };
+
+    function petalStroke(d, i) {
+        return d3.hcl(i / petals * 360, 60, 40);
+    };
+
+    function flowerSum(d) {
+        return d3.sum(d.petals, function(d) { return d.size; });
+    }
+
+    function r(angle) {
+        return "rotate(" + (angle / Math.PI * 180) + ")";
+    }
+
+    function polarToCartesian(angle, radius) {
+        return {
+            x: Math.cos(angle) * radius,
+            y: Math.sin(angle) * radius
+        };
+    };
+
+
+</script>
+
+<svg >
+
+    <g transform = "translate(50, 50)">
+
+    <path class="petal" transform="rotate(45)" d="M0,0L14.488887394336025,-3.882285676537811Q20.303300858899107,-3.882285676537811 25.606601717798213,0L25.606601717798213,0Q20.303300858899107,3.882285676537811 14.488887394336025,3.882285676537811Z"
+          style="stroke: rgb(175, 45, 49); fill: rgb(255, 128, 120);"></path>
+    <path class="petal" transform="rotate(15)" d="M0,0L14.488887394336025,-3.882285676537811Q20.303300858899107,-3.882285676537811 25.606601717798213,0L25.606601717798213,0Q20.303300858899107,3.882285676537811 14.488887394336025,3.882285676537811Z"
+          style="stroke: rgb(177, 32, 96); fill: rgb(255, 122, 173);"></path>
+    <path class="petal" transform="rotate(75)" d="M0,0L14.488887394336025,-3.882285676537812Q20.303300858899107,-3.882285676537812 25.606601717798213,0L25.606601717798213,0Q20.303300858899107,3.882285676537812 14.488887394336025,3.882285676537812Z"
+          style="stroke: rgb(152, 72, 0); fill: rgb(243, 148, 76);"></path>
+    <path class="petal" transform="rotate(104.99999999999999)" d="M0,0L14.488887394336025,-3.88228567653781Q20.303300858899107,-3.88228567653781 25.606601717798213,0L25.606601717798213,0Q20.303300858899107,3.88228567653781 14.488887394336025,3.88228567653781Z"
+          style="stroke: rgb(115, 92, 0); fill: rgb(201, 168, 54);"></path>
+    <path class="petal" transform="rotate(135)" d="M0,0L14.488887394336025,-3.88228567653781Q20.303300858899107,-3.88228567653781 25.606601717798213,0L25.606601717798213,0Q20.303300858899107,3.88228567653781 14.488887394336025,3.88228567653781Z"
+          style="stroke: rgb(66, 105, 0); fill: rgb(146, 184, 71);"></path>
+    <path class="petal" transform="rotate(164.99999999999997)" d="M0,0L14.488887394336025,-3.88228567653781Q20.303300858899107,-3.88228567653781 25.606601717798213,0L25.606601717798213,0Q20.303300858899107,3.88228567653781 14.488887394336025,3.88228567653781Z"
+          style="stroke: rgb(0, 112, 41); fill: rgb(69, 193, 114);"></path>
+    <path class="petal" transform="rotate(195)" d="M0,0L14.488887394336025,-3.88228567653781Q20.303300858899107,-3.88228567653781 25.606601717798213,0L25.606601717798213,0Q20.303300858899107,3.88228567653781 14.488887394336025,3.88228567653781Z"
+          style="stroke: rgb(0, 115, 93); fill: rgb(0, 198, 169);"></path>
+    <path class="petal" transform="rotate(224.99999999999997)" d="M0,0L14.488887394336023,-3.8822856765378138Q20.303300858899107,-3.8822856765378138 25.606601717798213,0L25.606601717798213,0Q20.303300858899107,3.8822856765378138 14.488887394336023,3.8822856765378138Z"
+          style="stroke: rgb(0, 115, 142); fill: rgb(0, 197, 224);"></path>
+    <path class="petal" transform="rotate(255)" d="M0,0L14.488887394336023,-3.8822856765378138Q20.303300858899107,-3.8822856765378138 25.606601717798213,0L25.606601717798213,0Q20.303300858899107,3.8822856765378138 14.488887394336023,3.8822856765378138Z"
+          style="stroke: rgb(0, 111, 179); fill: rgb(0, 191, 255);"></path>
+    <path class="petal" transform="rotate(285)" d="M0,0L14.488887394336023,-3.8822856765378138Q20.303300858899107,-3.8822856765378138 25.606601717798213,0L25.606601717798213,0Q20.303300858899107,3.8822856765378138 14.488887394336023,3.8822856765378138Z"
+          style="stroke: rgb(0, 101, 193); fill: rgb(34, 177, 255);"></path>
+    <path class="petal" transform="rotate(315.00000000000006)" d="M0,0L14.488887394336023,-3.8822856765378138Q20.303300858899107,-3.8822856765378138 25.606601717798213,0L25.606601717798213,0Q20.303300858899107,3.8822856765378138 14.488887394336023,3.8822856765378138Z"
+          style="stroke: rgb(88, 81, 180); fill: rgb(172, 157, 255);"></path>
+    <path class="petal" transform="rotate(345)" d="M0,0L14.488887394336023,-3.8822856765378138Q20.303300858899107,-3.8822856765378138 25.606601717798213,0L25.606601717798213,0Q20.303300858899107,3.8822856765378138 14.488887394336023,3.8822856765378138Z"
+          style="stroke: rgb(151, 54, 144); fill: rgb(237, 134, 226);"></path>
+
+</g>
+</svg>

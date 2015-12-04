@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>D3 SelectAll</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+    <style>
+        rect {
+            fill: lightgray;
+            stroke: darkgray;
+            stroke-width: 2px
+        }
+    </style>
+</head>
+<body>
+<svg height="3000" width="3000">
+    <circle cx="250" cy="250" r="10" label="-1" fill="purple" />
+    <circle cx="275" cy="265" r="10" label="-1"  fill="purple" />
+    <circle cx="290" cy="300" r="10" label="-1"  fill="purple" />
+    <circle cx="310" cy="245" r="10" label="-1"  fill="purple" />
+    <circle cx="200" cy="300" r="10" label="-1" fill="purple" />
+    <circle cx="400" cy="400" r="10" label="-1" fill="purple" />
+    <circle cx="420" cy="430" r="10" label="-1" fill="purple" />
+    <circle cx="500" cy="200" r="10" label="-1" fill="purple" />
+    <circle cx="600" cy="300" r="10" label="-1" fill="purple" />
+    <circle cx="680" cy="320" r="10" label="-1" fill="purple" />
+    <circle cx="700" cy="400" r="10" label="-1" fill="purple" />
+    <circle cx="800" cy="200" r="10" label="-1" fill="purple" />
+    <circle cx="820" cy="240" r="10" label="-1" fill="purple" />
+    <circle cx="810" cy="250" r="10" label="-1" fill="purple" />
+    <circle cx="900" cy="200" r="10" label="-1" fill="purple" />
+    <circle cx="830" cy="270" r="10" label="-1" fill="purple" />
+    <circle cx="880" cy="300" r="10" label="-1" fill="purple" />
+    <circle cx="840" cy="250" r="10" label="-1" fill="purple" />
+    <circle cx="1000" cy="320" r="10" label="-1" fill="purple" />
+    <circle cx="300" cy="500" r="10" label="-1" fill="purple" />
+    <circle cx="1005" cy="200" r="10" label="-1" fill="purple" />
+    <circle cx="1400" cy="220" r="10" label="-1" fill="purple" />
+    <circle cx="1300" cy="420" r="10" label="-1" fill="purple" />
+    <circle cx="1200" cy="320" r="10" label="-1" fill="purple" />
+    <circle cx="1250" cy="470" r="10" label="-1" fill="purple" />
+    <circle cx="1250" cy="600" r="10" label="1" fill="blue" />
+    <circle cx="1150" cy="720" r="10" label="1" fill="blue" />
+    <circle cx="600" cy="650" r="10" label="1" fill="blue" />
+    <circle cx="620" cy="800" r="10" label="1" fill="blue" />
+    <circle cx="700" cy="720" r="10" label="1" fill="blue" />
+    <circle cx="800" cy="650" r="10" label="1" fill="blue" />
+    <circle cx="875" cy="690" r="10" label="1" fill="blue" />
+    <circle cx="895" cy="790" r="10" label="1" fill="blue" />
+    <circle cx="300" cy="674" r="10" label="1" fill="blue" />
+    <circle cx="400" cy="700" r="10" label="1" fill="blue" />
+    <circle cx="450" cy="800" r="10" label="1" fill="blue" />
+    <circle cx="600" cy="670" r="10" label="1" fill="blue" />
+    <circle cx="720" cy="720" r="10" label="1" fill="blue" />
+    <circle cx="400" cy="1000" r="10" label="1" fill="blue" />
+    <circle cx="450" cy="730" r="10" label="1" fill="blue" />
+    <circle cx="340" cy="800" r="10" label="1" fill="blue" />
+    <circle cx="400" cy="700" r="10" label="1" fill="blue" />
+    <circle cx="500" cy="720" r="10" label="1" fill="blue" />
+    <circle cx="520" cy="700" r="10" label="1" fill="blue" />
+    <circle cx="1200" cy="600" r="10" label="1" fill="blue" />
+
+    <path d=" M 1200 0
+            L 0 200 " stroke="red" stroke-width="2" fill="none" />
+
+
+
+</svg>
+
+</body>
+<script>
+
+    var xValue=200;
+    var yValue = 1200;
+    var margin = 240000;
+    var execute = function () {
+        var p = d3.selectAll("circle");
+
+
+
+
+        p.on('click', function(){
+            var elt = d3.select(this);
+            updatePerceptron(elt.attr("cx"),elt.attr("cy"),elt.attr("label"));
+        });
+
+    }
+
+
+    var updatePerceptron=  function (x,  y, label){
+
+
+        var val =xValue*x + yValue*y - margin;
+
+        if(val*label<0){
+
+            xValue = xValue + 0.3*label*x;
+            yValue = yValue + 0.3*label*y;
+            margin =  margin -label;
+        }
+        else{
+            return;
+        }
+
+
+        var str="";
+        if(xValue>0&&yValue>0){
+
+            x1=margin/xValue;
+            y1=0;
+            x2=0;
+            y2=margin/yValue;
+            str=str.concat("M "+x1+ " "+y1 +" L "+x2+" "+y2);
+        }
+
+
+        else{
+
+            if(xValue>0){
+                var x=margin/xValue;
+                var y=0;
+
+                str=str.concat("M "+x+" "+y+" ");
+                while(x<3000&&y<3000) {
+                    y=(margin-xValue*x)/yValue;
+                    x+=4;
+
+                    str=str.concat(" L "+x+" "+y);
+                }
+            }
+
+            else if(yValue>0){
+                var y=margin/yValue;
+                var x=0;
+
+                str=str.concat("M "+x+" "+y+" ");
+                while(x<3000&&y<3000) {
+                    x=(margin-yValue*y)/xValue;
+                    y+=4;
+
+                    str=str.concat(" L "+x+" "+y);
+                }
+            }
+
+        }
+
+//        var p = d3.select("path");
+//        p
+//                .transition()
+//                .duration(3000);
+//
+//        p.attr("d",str);
+//        p.attr("stoke","blue");
+//        p.attr("stroke-width","2");
+        d3.selectAll("path")
+                .data([127])
+                .transition()
+                .duration(1000) // 3 seconds
+                .attr("d", str)
+                .attr("stoke","blue")
+                .attr("stroke-width","2");
+
+    }
+
+
+
+    //    var button = d3.select("body").append("button");
+    //     button.text("Run!");
+    //     button.on("click", execute);
+    execute();
+</script>
+
+
+</html>
