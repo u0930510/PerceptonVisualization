@@ -1,6 +1,4 @@
-/**
- * Created by abhinay on 12/1/15.
- */
+
 
 var values = document.getElementsByName('screen')
 for (var i=0,max=values.length; i<max; i++) {

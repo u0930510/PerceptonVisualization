@@ -1,8 +1,5 @@
 
-/**
- * author : Abhinay
- * date : 11/09/2015
- * */
+
 var a = {x: 1, y: 0},
     b = {x: 0, y: 2};
 

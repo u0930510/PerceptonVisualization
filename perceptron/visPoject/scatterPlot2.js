@@ -1,12 +1,4 @@
-/**
- * Created by abhinay on 11/22/15.
- */
 
-
-/**
- * author : Abhinay
- * date : 11/22/2015
- * */
 
 var a = {x: 1, y: 0},
     b = {x: 0, y: 2};
@@ -504,7 +496,7 @@ function runPerceptron(i){
     if(i<givenData2.length){
         setTimeout(function(){
             runPerceptron(i+1)
-        }, 70);
+        }, 150);
 
     }
 

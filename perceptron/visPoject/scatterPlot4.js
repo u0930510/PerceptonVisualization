@@ -1,11 +1,4 @@
-/**
- * Created by abhinay on 12/4/15.
- */
 
-/**
- * author : Abhinay
- * date : 11/09/2015
- * */
 var a4 = {x: 1, y: 0},
     b4 = {x: 0, y: 2};
 

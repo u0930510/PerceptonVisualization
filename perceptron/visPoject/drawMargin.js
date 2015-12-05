@@ -1,12 +1,3 @@
-/**
- * Created by abhinay on 11/24/15.
- */
-
-
-/**
- * author : Abhinay
- * date : 11/09/2015
- * */
 
 
 function gradient (a, b) {

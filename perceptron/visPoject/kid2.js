@@ -1,10 +1,4 @@
-/**
- * Created by abhinay on 12/1/15.
- */
 
-/**
- * Created by abhinay on 11/23/15.
- */
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     height = 500 - margin.top - margin.bottom;

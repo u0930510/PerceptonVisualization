@@ -1,8 +1,4 @@
 
-/**
- * author : Abhinay
- * date : 11/09/2015
- * */
 
 
 var vertex = {x: 3, y:4};
