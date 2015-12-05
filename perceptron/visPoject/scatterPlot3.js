@@ -153,29 +153,28 @@ function showMargin(){
 
     console.log("minVal" + minVal.x + " " + minVal.y);
 
-//    getWeightIntercepts();
-//    svg3.selectAll(".tempLine").style("opacity", 1)
-//        .transition().duration(2000).style("opacity", 0);
-
-    //  svg.selectAll(".tempLine").remove();
 
     result = altitude(minVal, a, b);
+    setTimeout(drawFinalMargin, 1000);
 
-    var line = svg3.append("line")
-        .attr("x1", function(){
-            return result.x;
-        })
-        .attr("y1", function() {
-            return result.y;
-        })
-        .attr("x2",  function() {
-            return minVal.x;
-        })
-        .attr("y2",  function() {
-            return minVal.y;
-        })
-        .attr("stroke-width", 2)
-        .attr("stroke", "green");
+    function drawFinalMargin(){
+
+        var line = svg3.append("line")
+            .attr("x1", function(){
+                return result.x;
+            })
+            .attr("y1", function() {
+                return result.y;
+            })
+            .attr("x2",  function() {
+                return minVal.x;
+            })
+            .attr("y2",  function() {
+                return minVal.y;
+            })
+            .attr("stroke-width", 2)
+            .attr("stroke", "green");
+    }
 
 
 }
@@ -211,6 +210,7 @@ function showClassifiers(){
         })
         .attr("stroke-width", 2)
         .attr("stroke", "blue")
+        .attr()
         .attr("class", "classifier")
         .attr("name", "line2");
 
@@ -487,27 +487,27 @@ d3.csv("iris.csv", function(error, data) {
 
     // displaying the linear seperator
 
-    var line = svg3.append("line")
-        .attr("x1", function(){
-            a.x = x(0.4)
-            return x(0.4);
-        })
-        .attr("y1", function() {
-            a.y = y(5.5)
-            return y(5.5);
-        })
-        .attr("x2",  function() {
-            b.x = x(0.7);
-            return x(0.7);
-        })
-        .attr("y2",  function() {
-            b.y = y(2.0);
-            return y(2.0);
-        })
-        .attr("stroke-width", 2)
-        .attr("stroke", "black")
-        .attr("class", "classifier")
-        .attr("name", "line1");
+    //var line = svg3.append("line")
+    //    .attr("x1", function(){
+    //        a.x = x(0.4)
+    //        return x(0.4);
+    //    })
+    //    .attr("y1", function() {
+    //        a.y = y(5.5)
+    //        return y(5.5);
+    //    })
+    //    .attr("x2",  function() {
+    //        b.x = x(0.7);
+    //        return x(0.7);
+    //    })
+    //    .attr("y2",  function() {
+    //        b.y = y(2.0);
+    //        return y(2.0);
+    //    })
+    //    .attr("stroke-width", 2)
+    //    .attr("stroke", "black")
+    //    .attr("class", "classifier")
+    //    .attr("name", "line1");
 
     var legend = svg3.selectAll(".legend")
         .data(color.domain())
@@ -712,3 +712,99 @@ d3.csv("iris.csv", function(error, data) {
     }
 
 });
+
+function expandWeightvector3(){
+    svg3.selectAll("line").remove();
+
+    var line = svg3.append("line")
+        .attr("x1", function(){
+            //     a.x = x(0)
+
+            return x(0.4);
+        })
+        .attr("y1", function() {
+            //      a.y = y(3.5)
+
+            return y(5.5);
+        })
+        .attr("x2",  function() {
+            //      b.x = x(0.6);
+
+            return x(0.4);
+        })
+        .attr("y2",  function() {
+            //      b.y = y(2.0);
+
+            return y(5.5);
+        })
+        .transition().duration(800)
+        .attr("x1", function(){
+            a.x = x(0.4)
+            return x(0.4);
+        })
+        .attr("y1", function() {
+            a.y = y(5.5)
+            return y(5.5);
+        })
+        .attr("x2",  function() {
+            b.x = x(0.7);
+            return x(0.7);
+        })
+        .attr("y2",  function() {
+            b.y = y(2.0);
+            return y(2.0);
+        })
+        .attr("stroke-width", 2)
+        .attr("stroke", "black")
+        .attr("class", "classifier")
+        .attr("name", "line1")
+    .attr("id","line1");
+
+}
+
+function shrinklWeightvectorBest3(){
+    svg3.selectAll("#line1").remove();
+
+    var line = svg3.append("line")
+        .attr("x1", function(){
+            //     a.x = x(0)
+
+            return a.x + 40;
+        })
+        .attr("y1", function() {
+            //      a.y = y(3.5)
+
+            return a.y;
+        })
+        .attr("x2",  function() {
+            //      b.x = x(0.6);
+
+            return b.x + 40;
+        })
+        .attr("y2",  function() {
+            //      b.y = y(2.0);
+
+            return b.y;
+        })
+        .transition().duration(800)
+        .attr("x1", function(){
+
+            return x(0.7);
+        })
+        .attr("y1", function() {
+
+            return y(2);
+        })
+        .attr("x2",  function() {
+
+            return x(0.7);
+        })
+        .attr("y2",  function() {
+
+            return y(2.0);
+        })
+        .attr("stroke-width", 2)
+        .attr("stroke", "black")
+        .attr("class", "classifier")
+
+}

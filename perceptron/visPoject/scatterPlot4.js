@@ -151,26 +151,26 @@ d3.csv("test.csv", function(error, data) {
         .style("fill", function(d) { return color4(d.species); });
 
 
-    var line = svg4.append("line")
-        .attr("x1", function(){
-            a4.x = x4(0.4)
-            return x4(0.4);
-        })
-        .attr("y1", function() {
-            a4.y = y4(5.5)
-            return y4(5.5);
-        })
-        .attr("x2",  function() {
-            b4.x = x4(0.7);
-            return x4(0.7);
-        })
-        .attr("y2",  function() {
-            b4.y = y4(2.0);
-            return y4(2.0);
-        })
-        .attr("stroke-width", 2)
-        .attr("stroke", "black")
-        .attr("class", "w1");
+    //var line = svg4.append("line")
+    //    .attr("x1", function(){
+    //        a4.x = x4(0.4)
+    //        return x4(0.4);
+    //    })
+    //    .attr("y1", function() {
+    //        a4.y = y4(5.5)
+    //        return y4(5.5);
+    //    })
+    //    .attr("x2",  function() {
+    //        b4.x = x4(0.7);
+    //        return x4(0.7);
+    //    })
+    //    .attr("y2",  function() {
+    //        b4.y = y4(2.0);
+    //        return y4(2.0);
+    //    })
+    //    .attr("stroke-width", 2)
+    //    .attr("stroke", "black")
+    //    .attr("class", "w1");
 
     var legend = svg4.selectAll(".legend")
         .data(color4.domain())
@@ -372,6 +372,54 @@ function addImage(i){
         },50);
     }
 
+
+
+}
+
+function expandWeightvector4(){
+
+
+    var line = svg4.append("line")
+        .attr("x1", function(){
+            //     a.x = x(0)
+
+            return x(0.4);
+        })
+        .attr("y1", function() {
+            //      a.y = y(3.5)
+
+            return y(5.5);
+        })
+        .attr("x2",  function() {
+            //      b.x = x(0.6);
+
+            return x(0.4);
+        })
+        .attr("y2",  function() {
+            //      b.y = y(2.0);
+
+            return y(5.5);
+        })
+        .transition().duration(800)
+        .attr("x1", function(){
+            a4.x = x4(0.4)
+            return x4(0.4);
+        })
+        .attr("y1", function() {
+            a4.y = y4(5.5)
+            return y4(5.5);
+        })
+        .attr("x2",  function() {
+            b4.x = x4(0.7);
+            return x4(0.7);
+        })
+        .attr("y2",  function() {
+            b4.y = y4(2.0);
+            return y4(2.0);
+        })
+        .attr("stroke-width", 2)
+        .attr("stroke", "black")
+        .attr("class", "w1");
 
 
 }

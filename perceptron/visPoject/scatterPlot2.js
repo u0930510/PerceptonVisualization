@@ -504,7 +504,7 @@ function runPerceptron(i){
     if(i<givenData2.length){
         setTimeout(function(){
             runPerceptron(i+1)
-        }, 700);
+        }, 70);
 
     }
 
@@ -555,6 +555,52 @@ function drawWeightVector(){
 
 
 }
+
+function shrinkWeightVector2(){
+    svg2.selectAll("line").remove();
+
+    var line = svg2.append("line")
+        .attr("x1", function(){
+            return ssp21.x;
+        })
+        .attr("y1", function() {
+            return ssp21.y;
+        })
+        .attr("x2",  function() {
+            return ssp22.x;
+        })
+        .attr("y2",  function() {
+            return ssp22.y;
+        })
+        .transition().duration(800)
+        .attr("x1", function(){
+            //     a.x = x(0)
+
+            return x(0.7);
+        })
+        .attr("y1", function() {
+            //      a.y = y(3.5)
+
+            return y(2);
+        })
+        .attr("x2",  function() {
+            //      b.x = x(0.6);
+
+            return x(0.7);
+        })
+        .attr("y2",  function() {
+            //      b.y = y(2.0);
+
+            return y(2.0);
+        })
+        .attr("stroke-width", 2)
+        .attr("stroke", "black");
+
+    line.attr("class", "weightVector");
+
+
+}
+
 
 
 
